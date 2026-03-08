@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Up - Growth</title>
+    <link rel="icon" href="SELF UP.png" type="image/png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* Variabel Warna & Dasar */
+        :root {
+            --bg-color: #1E1E1E;
+            --accent-color: #FCD37E;
+            --text-white: #FFFFFF;
+            --card-bg: #2A2A2A;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, .playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- Animasi Background (Salju & Glow) --- */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #252525 0%, #1E1E1E 100%);
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(105vh) translateX(20px); }
+        }
+
+        .glow-circle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-color);
+            animation: float-glow 4s infinite ease-in-out;
+        }
+
+        @keyframes float-glow {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(2); opacity: 0.8; }
+        }
+
+        /* --- Navigasi & Header --- */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .lang-switch {
+            position: fixed;
+            top: 25px;
+            right: 20px;
+            z-index: 1000;
+            color: var(--accent-color);
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--accent-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .menu-btn {
+            background-color: rgba(42, 42, 42, 0.44);
+            border: none;
+            color: var(--accent-color);
+            font-size: 20px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-weight: 600;
+            border-radius: 30px;
+            overflow: hidden;
+            padding: 5px 10px;
+            margin: 5px 0;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: #151515;
+            padding-top: 80px;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+        }
+
+        .side-menu.active { left: 0; }
+
+        .side-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .side-menu a:hover { color: var(--accent-color); padding-left: 35px; }
+
+        /* --- Header Brand --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .brand-icon {
+            width: 80%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(252, 211, 126, 0.2));
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-white);
+            opacity: 0.8;
+            font-weight: 600;
+            margin-top: -50px;
+        }
+
+        /* --- Section Styling --- */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none; /* Default sembunyi untuk SPA */
+        }
+
+        section.active { display: block; animation: fadeIn 0.8s ease; margin-left: 50px; margin-right: 50px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sub-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+        }
+
+        .sub-title i { color: var(--accent-color); margin-right: 10px; }
+
+        /* --- Social Buttons --- */
+        .social-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+
+        .glow-btn {
+            background-color: var(--accent-color);
+            color: #000;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 0 15px rgba(252, 211, 126, 0.4);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .glow-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(252, 211, 126, 0.7);
+        }
+
+        /* --- Carousel Quote --- */
+        .quote-header { text-align: center; margin-bottom: 30px; }
+        .quote-icon { font-size: 3rem; color: var(--accent-color); margin-bottom: 10px; }
+
+        .carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .quote-card {
+            background: var(--card-bg);
+            aspect-ratio: 1/1;
+            padding: 30px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.1rem;
+            border: 1px solid #333;
+            transition: 0.5s;
+            position: relative;
+        }
+
+        .quote-label {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            font-size: 18px;
+            color: var(--accent-color);
+            font-weight: 600;
+            font-style: normal;
+            padding: 25px 30px;
+            border: none;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .nav-arrow {
+            background: #151515;
+            color: white;
+            width: 45px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        .dot-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dot {
+            height: 8px;
+            width: 8px;
+            background-color: #555;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+            transition: 0.3s;
+        }
+
+        .dot.active { background-color: var(--accent-color); width: 20px; border-radius: 10px; }
+
+        /* --- About Page --- */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: justify;
+            font-size: 15px;
+            color: #DDD;
+        }
+
+        .about-content p { margin-bottom: 20px; }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            text-align: center;
+            margin-top: 100px;
+            padding: 40px;
+            border: none;
+            border-radius: 20px;
+            background-color: rgba(42, 42, 42, 1);
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 768px) {
+            .carousel-container { grid-template-columns: 1fr; }
+            .carousel-container .quote-card:not(.active-mobile) { display: none; }
+            .brand-icon { width: 95%; }
+            .tagline { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation" id="bgAnim"></div>
+
+    <div class="lang-switch" onclick="toggleLang()" id="langBtn">IND</div>
+
+    <nav>
+        <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i> Menu</button>
+    </nav>
+
+    <div class="side-menu" id="sideMenu">
+        <a href="#" onclick="showPage('beranda')"><i class="fas fa-home"></i> Beranda</a>
+        <a href="#" onclick="showPage('about')"><i class="fas fa-user"></i> About</a>
+    </div>
+
+    <main id="page-beranda">
+        <header class="hero">
+            <img src="Self up icon II.png" alt="Self Up Icon" class="brand-icon" onerror="this.src='https://via.placeholder.com/500x500/1e1e1e/fcd37e?text=SELF+UP'">
+            <div class="tagline">Growth</div>
+        </header>
+
+        <section id="beranda-content" class="active">
+            <h3 class="sub-title"><i class="fas fa-link"></i> Terhubung dengan Kami</h3>
+            <div class="social-container">
+                <a href="https://lynk.id/self.up" class="glow-btn"><i class="fas fa-shopping-cart"></i> Store Buku</a>
+                <a href="https://www.tiktok.com/@self.up_id" class="glow-btn"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="https://www.youtube.com/@self.up_id" class="glow-btn"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://www.instagram.com/self.up_id/" class="glow-btn"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+
+            <div class="quote-header">
+                <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                <h2 class="playfair">Refleksi Hari Ini</h2>
+            </div>
+
+            <div class="carousel-wrapper">
+                <button class="nav-arrow" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-container" id="quoteContainer">
+                    </div>
+                <button class="nav-arrow" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="dot-container" id="dotContainer"></div>
+
+            <div class="cta-section">
+                <h2 class="playfair">Ingin bertumbuh lebih dalam?</h2>
+                <p style="margin: 20px 0;">Dapatkan panduan eksklusif untuk memahami dirimu sendiri melalui E-Book pilihan kami.</p>
+                <a href="https://lynk.id/self.up" class="glow-btn" style="display: inline-flex; margin-top: 10px;">Jelajahi E-Book kami</a>
+            </div>
+        </section>
+    </main>
+
+    <main id="page-about" style="display: none;">
+        <section class="active">
+            <h2 class="playfair" style="font-size: 3rem; text-align: center; margin-bottom: 40px;">About Self Up</h2>
+            <div class="about-content">
+                <p>Self Up adalah ruang singkat untuk berhenti, ngelihat langkah, dan mulai lagi dengan lebih tenang. Kami bikin konten yang ngajak kamu refleksi, tidak untuk menjudge, tapi untuk ngerti proses. Lewat cerita pendek, monolog, dan si maskot Self Up, kita paham bahwa tiap langkah punya arti. Pelan juga tetap maju.</p>
+                <p>Kami membuat konten yang mengajak kamu untuk refleksi. Bukan untuk menghakimi diri sendiri, bukan juga untuk membandingkan hidup dengan orang lain, tetapi untuk memahami proses yang sedang kamu jalani. Kadang yang kita butuhkan bukan jawaban yang rumit, melainkan sudut pandang baru yang lebih jernih.</p>
+                <p>Lewat cerita pendek, monolog reflektif, dan karakter maskot Self Up yang merepresentasikan suara kecil di dalam diri kita, setiap konten dirancang untuk membantu kamu melihat kehidupan dengan cara yang lebih tenang dan lebih sadar. Hal-hal yang sering kita rasakan. Overthinking, rasa tertinggal, kelelahan, atau keraguan tentang masa depan. Semua itu adalah bagian dari perjalanan manusia.</p>
+                <p>Self Up percaya bahwa pertumbuhan tidak selalu terlihat besar. Kadang growth terjadi dalam langkah yang kecil. Dalam keputusan untuk mencoba lagi. Dalam keberanian untuk menerima diri sendiri. Atau dalam momen ketika kita akhirnya memahami sesuatu tentang hidup.</p>
+                <p>Di sini, kamu tidak dituntut untuk selalu kuat atau selalu benar. Self Up hanya ingin menjadi ruang kecil yang mengingatkan bahwa setiap orang punya ritmenya sendiri. Setiap proses punya waktunya sendiri.</p>
+                <p>Karena pada akhirnya, setiap langkah yang kamu ambil tetap memiliki arti. Pelan juga tetap maju. <br><strong>Growth.</strong></p>
+            </div>
+
+            <div class="social-container" style="margin-top: 50px; opacity: 0.7; padding: 50px 0;">
+                <a href="https://lynk.id/self.up" class="glow-btn"><i class="fas fa-shopping-cart"></i></a>
+                <a href="https://www.tiktok.com/@self.up_id" class="glow-btn"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.youtube.com/@self.up_id" class="glow-btn"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/self.up_id/" class="glow-btn"><i class="fab fa-instagram"></i></a>
+                <a href="https://self-up-id.vercel.app/" class="glow-btn"><i class="fas fa-globe"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- DATA QUOTE ---
+        const quotes = [
+            "Pelan juga tetap maju.",
+            "Growth bukan tentang kompetisi, tapi tentang menjadi lebih baik dari dirimu kemarin.",
+            "Berhenti sejenak bukan berarti kalah.",
+            "Setiap langkah kecil adalah bagian dari perjalanan besar.",
+            "Jangan bandingkan prosesmu dengan hasil orang lain.",
+            "Menerima kekurangan adalah awal dari kekuatan.",
+            "Overthinking hanyalah imajinasi yang sedang lelah.",
+            "Suara kecil di dalam dirimu perlu didengar, bukan diabaikan.",
+            "Istirahatlah, esok adalah hari yang baru untuk mencoba lagi."
+        ];
+
+        let currentIdx = 0;
+
+        // --- FUNGSI NAVIGASI HALAMAN ---
+        function showPage(page) {
+            document.getElementById('page-beranda').style.display = (page === 'beranda') ? 'block' : 'none';
+            document.getElementById('page-about').style.display = (page === 'about') ? 'block' : 'none';
+            toggleMenu(); // Tutup menu setelah klik
+            window.scrollTo(0,0);
+        }
+
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        // --- FUNGSI GANTI BAHASA (SIMULASI) ---
+        function toggleLang() {
+            const btn = document.getElementById('langBtn');
+            btn.innerText = btn.innerText === 'IND' ? 'ENG' : 'IND';
+        }
+
+        // --- GENERATE SALJU & GLOW ---
+        function createParticles() {
+            const bg = document.getElementById('bgAnim');
+            // Tambah Salju
+            for (let i = 0; i < 50; i++) {
+                let snow = document.createElement('div');
+                snow.className = 'snowflake';
+                snow.style.left = Math.random() * 100 + 'vw';
+                snow.style.width = snow.style.height = Math.random() * 5 + 2 + 'px';
+                snow.style.animationDuration = Math.random() * 3 + 7 + 's';
+                snow.style.animationDelay = Math.random() * 5 + 's';
+                bg.appendChild(snow);
+            }
+            // Tambah Glow kecil
+            for (let i = 0; i < 15; i++) {
+                let glow = document.createElement('div');
+                glow.className = 'glow-circle';
+                glow.style.left = Math.random() * 100 + 'vw';
+                glow.style.top = Math.random() * 100 + 'vh';
+                glow.style.animationDelay = Math.random() * 4 + 's';
+                bg.appendChild(glow);
+            }
+        }
+
+        // --- CAROUSEL LOGIC ---
+        function initCarousel() {
+            const container = document.getElementById('quoteContainer');
+            const dots = document.getElementById('dotContainer');
+            container.innerHTML = '';
+            dots.innerHTML = '';
+
+            // Tampilkan 3 quote sekaligus (Looping logic sederhana)
+            for (let i = 0; i < 3; i++) {
+                let idx = (currentIdx + i) % quotes.length;
+                let card = document.createElement('div');
+                card.className = 'quote-card';
+                if (i === 0) card.classList.add('active-mobile'); // Untuk mobile view
+                card.innerHTML = `"${quotes[idx]}"<span class="quote-label">#self-up</span>`;
+                container.appendChild(card);
+            }
+
+            // Dots indikator
+            for (let i = 0; i < Math.ceil(quotes.length / 3); i++) {
+                let dot = document.createElement('div');
+                dot.className = 'dot' + (Math.floor(currentIdx/3) === i ? ' active' : '');
+                dots.appendChild(dot);
+            }
+        }
+
+        function moveCarousel(step) {
+            currentIdx = (currentIdx + (step * 3) + quotes.length) % quotes.length;
+            initCarousel();
+        }
+
+        // Jalankan saat load
+        window.onload = () => {
+            createParticles();
+            initCarousel();
+        };
+    </script>
+</body>
+</html>
