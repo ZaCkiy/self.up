@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Self Up | The Premium Experience</title>
+    <title>Self Up | Growth and Healing</title>
     
     <link rel="icon" href="SELF UP.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet">
@@ -11,13 +11,13 @@
 
     <style>
         :root {
-            --bg-deep: #050505;      /* Hitam Obsidian */
+            --bg-deep: #050505;
             --bg-card: #0D0D0D;      
             --accent: #FCD37E;       
             --accent-gradient: linear-gradient(135deg, #FCD37E 0%, #D4AF37 50%, #B8860B 100%);
             --text-main: #FFFFFF;
             --text-dim: #777777;     
-            --transition-slow: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+            --transition-premium: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -30,87 +30,82 @@
             line-height: 1.7;
         }
 
-        /* --- BACKGROUND AURA (ULTRA LUXURY) --- */
+        /* --- LUXURY BACKGROUND --- */
         #bgAnim { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: #050505; }
         .aura {
-            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.15;
-            animation: moveAura 25s infinite alternate ease-in-out;
+            position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.12;
+            animation: moveAura 20s infinite alternate ease-in-out;
         }
-        .aura-1 { width: 80vw; height: 80vw; background: var(--accent); top: -20%; left: -20%; }
-        .aura-2 { width: 60vw; height: 60vw; background: #333; bottom: -10%; right: -10%; animation-delay: -5s; }
+        .aura-1 { width: 70vw; height: 70vw; background: var(--accent); top: -10%; left: -10%; }
+        .aura-2 { width: 50vw; height: 50vw; background: #444; bottom: -10%; right: -5%; animation-delay: -5s; }
         
         @keyframes moveAura {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(100px, 50px) rotate(15deg); }
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(80px, 40px); }
         }
 
-        /* --- NAV & LANGUAGE --- */
-        nav { position: fixed; top: 40px; left: 40px; z-index: 1000; }
-        .menu-btn {
-            background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05); color: #FFF;
-            padding: 14px 32px; border-radius: 100px; cursor: pointer;
-            font-weight: 400; letter-spacing: 2px; transition: var(--transition-slow);
-        }
-        .menu-btn:hover { background: #FFF; color: #000; letter-spacing: 4px; }
-
+        /* --- MINIMALIST LANG SWITCH --- */
         .lang-switch {
-            position: fixed; top: 45px; right: 40px; z-index: 1000; color: var(--accent);
+            position: fixed; top: 40px; right: 40px; z-index: 1002; color: var(--accent);
             font-weight: 800; cursor: pointer; font-size: 11px; letter-spacing: 2px;
-            border: 1px solid rgba(252, 211, 126, 0.3); padding: 6px 18px; border-radius: 50px;
+            padding: 8px 16px; border-radius: 50px; background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(252, 211, 126, 0.2); backdrop-filter: blur(10px);
         }
 
-        /* --- HERO SECTION --- */
-        .hero { 
-            height: 90vh; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; text-align: center;
+        /* --- DROPDOWN NAVIGATION (SCROLL DOWN EFFECT) --- */
+        nav { position: fixed; top: 40px; left: 40px; z-index: 1002; }
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); color: #FFF;
+            padding: 12px 28px; border-radius: 100px; cursor: pointer;
+            font-weight: 400; letter-spacing: 2px; transition: var(--transition-premium);
         }
-        .brand-icon { 
-            width: 150px; margin-bottom: 30px; 
-            filter: drop-shadow(0 0 30px rgba(252, 211, 126, 0.2));
-            animation: fadeInIcon 2s ease-out;
+        .menu-btn:hover { background: var(--accent); color: #000; }
+
+        .dropdown-nav {
+            position: fixed; top: -100px; left: 0; width: 100%; height: auto;
+            background: rgba(10, 10, 10, 0.98); border-bottom: 1px solid rgba(252, 211, 126, 0.1);
+            z-index: 1001; transition: var(--transition-premium); visibility: hidden;
+            padding: 120px 40px 40px; display: flex; justify-content: center; gap: 50px;
         }
+        .dropdown-nav.active { top: 0; visibility: visible; }
+        .dropdown-nav a {
+            text-decoration: none; color: #888; font-size: 14px; font-weight: 600;
+            letter-spacing: 3px; text-transform: uppercase; transition: 0.3s;
+        }
+        .dropdown-nav a:hover { color: var(--accent); transform: translateY(-3px); }
+
+        /* --- HERO --- */
+        .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .brand-icon { width: 140px; margin-bottom: 30px; filter: drop-shadow(0 0 20px rgba(252, 211, 126, 0.2)); }
         .hero h1 { 
             font-family: 'Playfair Display', serif; font-size: clamp(4rem, 12vw, 8rem); 
-            font-weight: 900; letter-spacing: -4px; line-height: 0.9; margin-bottom: 15px;
-            background: linear-gradient(to bottom, #FFF 40%, #555 100%);
+            font-weight: 900; letter-spacing: -4px; line-height: 0.9;
+            background: linear-gradient(to bottom, #FFF 50%, #777 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .hero p { 
-            color: var(--accent); font-weight: 300; letter-spacing: 15px; 
-            text-transform: uppercase; font-size: 12px; margin-top: 10px;
-        }
+        .hero p { color: var(--accent); font-weight: 300; letter-spacing: 12px; text-transform: uppercase; font-size: 11px; margin-top: 15px; }
 
-        /* --- BENTO SOCIAL GRID --- */
-        .social-bento { 
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; 
-            margin: 0 auto 120px; max-width: 1100px; padding: 0 25px;
-        }
+        /* --- BENTO SOCIAL --- */
+        .social-bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 1100px; margin: 0 auto 100px; padding: 0 25px; }
         .social-item {
-            background: rgba(13, 13, 13, 0.5); padding: 40px 20px; border-radius: 30px;
+            background: rgba(13, 13, 13, 0.6); padding: 40px 20px; border-radius: 30px;
             text-decoration: none; color: #FFF; border: 1px solid rgba(255,255,255,0.03);
-            transition: var(--transition-slow); display: flex; flex-direction: column; align-items: center; gap: 15px;
+            transition: var(--transition-premium); display: flex; flex-direction: column; align-items: center; gap: 15px;
         }
-        .social-item:hover { 
-            background: #111; border-color: var(--accent); 
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-        .social-item i { font-size: 24px; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .social-item span { font-weight: 600; font-size: 11px; letter-spacing: 2px; color: var(--text-dim); }
+        .social-item:hover { border-color: var(--accent); background: #111; transform: translateY(-8px); }
+        .social-item i { font-size: 22px; color: var(--accent); }
+        .social-item span { font-weight: 600; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); }
 
         /* --- QUOTE SLIDER --- */
-        .carousel-viewport { overflow: hidden; margin-bottom: 120px; padding: 20px 0; }
-        .quote-track { display: flex; transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); gap: 30px; padding: 0 50px; }
+        .carousel-viewport { overflow: hidden; margin-bottom: 100px; padding: 20px 0; }
+        .quote-track { display: flex; transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1); gap: 25px; padding: 0 50px; }
         .quote-card {
-            min-width: calc(33.333% - 20px); background: #0D0D0D; 
-            padding: 50px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.02);
-            min-height: 320px; display: flex; flex-direction: column; justify-content: space-between;
-            transition: var(--transition-slow);
+            min-width: calc(33.333% - 17px); background: #0D0D0D; padding: 45px; border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.02); min-height: 280px; display: flex; flex-direction: column; justify-content: space-between;
         }
-        .quote-card:hover { border-color: rgba(252, 211, 126, 0.2); background: #111; }
-        .quote-card p { font-size: 18px; font-weight: 300; line-height: 1.8; color: #BBB; }
-        .quote-card .tag { font-size: 9px; color: var(--accent); letter-spacing: 3px; font-weight: 800; }
+        .quote-card p { font-size: 17px; font-weight: 300; line-height: 1.8; color: #BBB; }
+        .quote-card .tag { font-size: 10px; color: var(--accent); letter-spacing: 2px; font-weight: 800; text-transform: lowercase; }
 
         /* --- PREMIUM FOOTER E-BOOK --- */
         .bento-ebook {
@@ -118,54 +113,31 @@
             overflow: hidden; border: 1px solid rgba(255,255,255,0.03); max-width: 1100px; margin: 0 auto 100px;
         }
         .ebook-content { padding: 80px; }
-        .ebook-content h2 { font-size: 52px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 25px; }
+        .ebook-content h2 { font-size: 48px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 25px; }
         .btn-premium {
-            background: var(--accent-gradient); color: #000; padding: 22px 45px; border-radius: 100px;
+            background: var(--accent-gradient); color: #000; padding: 20px 45px; border-radius: 100px;
             text-decoration: none; font-weight: 800; display: inline-flex; align-items: center; gap: 15px;
-            transition: var(--transition-slow); font-size: 14px; text-transform: uppercase; letter-spacing: 1px;
+            transition: var(--transition-premium); font-size: 13px; text-transform: uppercase;
         }
-        .btn-premium:hover { transform: scale(1.05); box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3); }
+        .btn-premium:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); }
 
-        .ebook-visual { background: radial-gradient(circle at center, #151515, #0D0D0D); display: flex; align-items: center; justify-content: center; position: relative; }
+        .ebook-visual { background: #0c0c0c; display: flex; align-items: center; justify-content: center; position: relative; }
         .book-mockup {
-            width: 220px; height: 320px; background: #000; border-radius: 4px 15px 15px 4px;
-            border: 1px solid rgba(255,255,255,0.15); transform: rotate(-10deg);
-            box-shadow: 40px 40px 80px rgba(0,0,0,0.8); display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 25px;
+            width: 200px; height: 280px; background: #000; border-radius: 4px 15px 15px 4px;
+            border: 1px solid rgba(255,255,255,0.1); transform: rotate(-8deg);
+            box-shadow: 40px 40px 80px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
         }
 
         /* --- ABOUT --- */
-        .about-box { 
-            background: #0D0D0D; padding: 100px 80px; border-radius: 50px; 
-            max-width: 1100px; margin: 100px auto; border: 1px solid rgba(255,255,255,0.02);
-        }
-        .about-box h2 { 
-            font-family: 'Playfair Display', serif; font-size: 50px; text-align: center; margin-bottom: 60px;
-            background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .about-content p { color: #888; margin-bottom: 30px; font-size: 17px; line-height: 2; text-align: justify; }
-
-        /* --- SIDE MENU --- */
-        .side-menu {
-            position: fixed; top: 0; left: -100%; width: 100%; height: 100%;
-            background: rgba(5,5,5,0.98); z-index: 1001; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; transition: var(--transition-slow);
-        }
-        .side-menu.active { left: 0; }
-        .side-menu a { 
-            font-size: 40px; font-weight: 800; color: #333; text-decoration: none; 
-            margin: 20px 0; transition: 0.4s; font-family: 'Playfair Display', serif;
-        }
-        .side-menu a:hover { color: var(--accent); transform: scale(1.1); }
-
-        @keyframes fadeInIcon { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .about-box { background: #0D0D0D; padding: 80px 60px; border-radius: 50px; max-width: 1100px; margin: 100px auto; border: 1px solid rgba(255,255,255,0.02); }
+        .about-box h2 { font-family: 'Playfair Display', serif; font-size: 45px; text-align: center; margin-bottom: 50px; color: #FFF; }
+        .about-content p { color: #888; margin-bottom: 25px; font-size: 16px; line-height: 2; text-align: justify; }
 
         @media (max-width: 900px) {
             .social-bento { grid-template-columns: repeat(2, 1fr); }
             .quote-card { min-width: 100%; }
-            .bento-ebook { grid-template-columns: 1fr; border-radius: 0; }
-            .ebook-content { padding: 50px 30px; text-align: center; }
-            .about-box { padding: 50px 30px; border-radius: 0; }
+            .bento-ebook { grid-template-columns: 1fr; }
+            .dropdown-nav { flex-direction: column; text-align: center; gap: 20px; }
         }
     </style>
 </head>
@@ -176,29 +148,29 @@
         <div class="aura aura-2"></div>
     </div>
 
-    <div class="lang-switch" onclick="toggleLang()" id="langBtn">INDONESIA</div>
+    <div class="lang-switch" onclick="toggleLang()" id="langBtn">ID</div>
 
     <nav>
-        <button class="menu-btn" onclick="toggleMenu()">DISCOVER</button>
+        <button class="menu-btn" onclick="toggleDropdown()">DISCOVER</button>
     </nav>
 
-    <div class="side-menu" id="sideMenu">
-        <a href="#" onclick="showPage('beranda')">HOME</a>
-        <a href="#" onclick="showPage('about')">ABOUT</a>
-        <a href="https://lynk.id/self.up" target="_blank">THE STORE</a>
-        <button onclick="toggleMenu()" style="background:none; border:none; color:var(--accent); cursor:pointer; margin-top:50px;">CLOSE</button>
+    <div class="dropdown-nav" id="dropdownNav">
+        <a href="#" onclick="showPage('beranda')">Home</a>
+        <a href="#" onclick="showPage('about')">Philosophy</a>
+        <a href="https://lynk.id/self.up" target="_blank">Store</a>
+        <a href="#" onclick="toggleDropdown()" style="color:var(--accent)">× Close</a>
     </div>
 
     <main id="page-beranda">
         <header class="hero">
             <img src="Self up icon II.png" class="brand-icon" alt="Self Up" onerror="this.src='https://via.placeholder.com/150/FCD37E/000000?text=UP'">
             <h1 class="playfair">Self Up</h1>
-            <p id="heroTag">The Evolution of Self</p>
+            <p id="heroTag">Growth and healing</p>
         </header>
 
         <section id="beranda-content" style="display: block;">
             <div class="social-bento">
-                <a href="https://lynk.id/self.up" target="_blank" class="social-item"><i class="fas fa-crown"></i><span>E-BOOK STORE</span></a>
+                <a href="https://lynk.id/self.up" target="_blank" class="social-item"><i class="fas fa-crown"></i><span>E-BOOK</span></a>
                 <a href="https://www.tiktok.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-tiktok"></i><span>TIKTOK</span></a>
                 <a href="https://www.youtube.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-youtube"></i><span>YOUTUBE</span></a>
                 <a href="https://www.instagram.com/self.up_id/" target="_blank" class="social-item"><i class="fab fa-instagram"></i><span>INSTAGRAM</span></a>
@@ -211,16 +183,13 @@
             <div class="bento-ebook">
                 <div class="ebook-content">
                     <h2 id="ebookTitle">Master Your <br>Inner Authority</h2>
-                    <p id="ebookDesc" style="color:#666; margin-bottom:40px;">Sebuah blueprint definitif untuk navigasi diri di dunia modern.</p>
-                    <a href="https://lynk.id/self.up" target="_blank" class="btn-premium"><span id="ebookBtn">Aquire Access</span><i class="fas fa-arrow-right"></i></a>
+                    <a href="https://lynk.id/self.up" target="_blank" class="btn-premium"><span id="ebookBtn">Acquire Access</span><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="ebook-visual">
                     <div class="book-mockup">
-                        <div style="background: var(--accent); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-                            <i class="fas fa-chevron-up" style="color: #000;"></i>
-                        </div>
+                        <div style="background: var(--accent); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;"><i class="fas fa-chevron-up" style="color: #000;"></i></div>
                         <div style="font-size: 10px; color: var(--accent); font-weight: 800; letter-spacing: 4px;">SELF UP</div>
-                        <div class="playfair" style="font-size: 20px; text-align: center; margin-top: 10px;">The Mastery Manual</div>
+                        <div class="playfair" style="font-size: 18px; text-align: center; margin-top: 10px;">The Mastery Manual</div>
                     </div>
                 </div>
             </div>
@@ -229,7 +198,7 @@
 
     <main id="page-about" style="display: none;">
         <div class="about-box">
-            <h2 class="playfair">Philosophy of Self Up</h2>
+            <h2 class="playfair">Philosophy</h2>
             <div class="about-content">
                 <p>Self Up adalah ruang singkat untuk berhenti, ngelihat langkah, dan mulai lagi dengan lebih tenang. Kami bikin konten yang ngajak kamu refleksi, tidak untuk menjudge, tapi untuk ngerti proses. Lewat cerita pendek, monolog, dan si maskot Self Up, kita paham bahwa tiap langkah punya arti. Pelan juga tetap maju.</p>
                 <p>Kami membuat konten yang mengajak kamu untuk refleksi. Bukan untuk menghakimi diri sendiri, bukan juga untuk membandingkan hidup dengan orang lain, tetapi untuk memahami proses yang sedang kamu jalani. Kadang yang kita butuhkan bukan jawaban yang rumit, melainkan sudut pandang baru yang lebih jernih.</p>
@@ -243,46 +212,39 @@
 
     <script>
         const quotesData = {
-            IND: [
+            ID: [
                 "Pelan juga tetap maju.", "Evolusi diri tak butuh penonton.", "Istirahat adalah investasi jiwa.",
                 "Bandingkan dirimu dengan hari kemarin.", "Menerima adalah awal kekuatan.", "Suaramu berharga, meski lirih.",
                 "Setiap musim punya maknanya.", "Jeda bukan berarti tanda berhenti.", "Keberanian dimulai dari kejujuran."
             ],
-            ENG: [
+            EN: [
                 "Slow is still forward.", "Your evolution needs no audience.", "Rest is a soul investment.",
                 "Compare yourself only to yesterday.", "Acceptance is where power begins.", "Your voice matters, even if soft.",
                 "Every season has its purpose.", "A pause is not a stop sign.", "Bravery starts with honesty."
             ]
         };
 
-        const ui = {
-            IND: { tag: "The Evolution of Self", ebookT: "Master Your <br>Inner Authority", ebookB: "Aquire Access" },
-            ENG: { tag: "The Evolution of Self", ebookT: "Master Your <br>Inner Authority", ebookB: "Aquire Access" }
-        };
-
-        let lang = 'IND';
+        let lang = 'ID';
         let currentGroup = 0;
 
-        function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
+        function toggleDropdown() {
+            document.getElementById('dropdownNav').classList.toggle('active');
+        }
         
         function showPage(page) {
             document.getElementById('page-beranda').style.display = (page === 'beranda') ? 'block' : 'none';
             document.getElementById('page-about').style.display = (page === 'about') ? 'block' : 'none';
-            document.getElementById('sideMenu').classList.remove('active');
+            document.getElementById('dropdownNav').classList.remove('active');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function toggleLang() {
-            lang = (lang === 'IND') ? 'ENG' : 'IND';
-            document.getElementById('langBtn').innerText = (lang === 'IND') ? 'INDONESIA' : 'ENGLISH';
+            lang = (lang === 'ID') ? 'EN' : 'ID';
+            document.getElementById('langBtn').innerText = lang;
             updateUI();
         }
 
         function updateUI() {
-            const d = ui[lang];
-            document.getElementById('heroTag').innerText = d.tag;
-            document.getElementById('ebookTitle').innerHTML = d.ebookT;
-            document.getElementById('ebookBtn').innerText = d.ebookB;
             renderQuotes();
         }
 
@@ -292,9 +254,9 @@
             quotesData[lang].forEach(q => {
                 track.innerHTML += `
                     <div class="quote-card">
-                        <i class="fas fa-quote-left"></i>
+                        <i class="fas fa-quote-left" style="color:var(--accent); opacity:0.3; margin-bottom:20px;"></i>
                         <p>${q}</p>
-                        <div class="tag">EST. 2024</div>
+                        <div class="tag">#self_up</div>
                     </div>
                 `;
             });
@@ -303,7 +265,7 @@
         setInterval(() => {
             currentGroup = (currentGroup + 1) % 3;
             const track = document.getElementById('quoteTrack');
-            const cardWidth = document.querySelector('.quote-card').offsetWidth + 30;
+            const cardWidth = document.querySelector('.quote-card').offsetWidth + 25;
             track.style.transform = `translateX(-${currentGroup * cardWidth * (window.innerWidth > 900 ? 3 : 1)}px)`;
         }, 3000);
 
