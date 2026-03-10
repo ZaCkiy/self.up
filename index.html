@@ -6,21 +6,20 @@
     <title>Self Up | Premium Growth</title>
     
     <link rel="icon" href="SELF UP.png" type="image/png">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
         :root {
-            --bg-deep: #0A0A0A;      
-            --bg-card: #141414;      
+            --bg-deep: #080808;      
+            --bg-card: #111111;      
             --accent: #FCD37E;       
             --text-main: #FFFFFF;
             --text-dim: #888888;     
-            --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -30,148 +29,122 @@
             line-height: 1.6;
         }
 
-        /* --- Background Animation --- */
-        #bgAnim {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background: radial-gradient(circle at 50% 10%, #1A1A1A 0%, #0A0A0A 100%);
+        /* --- PREMIUM ANIMATE GLOW --- */
+        #bgAnim { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: #080808; overflow: hidden; }
+        .premium-glow {
+            position: absolute; background: radial-gradient(circle, rgba(252, 211, 126, 0.12) 0%, rgba(252, 211, 126, 0) 70%);
+            border-radius: 50%; filter: blur(60px); opacity: 0; animation: luxuryFloat 15s infinite ease-in-out;
+        }
+        .glow-1 { width: 600px; height: 600px; top: -10%; left: -10%; animation-delay: 0s; }
+        .glow-2 { width: 500px; height: 500px; bottom: 10%; right: -5%; animation-delay: 5s; }
+        .glow-3 { width: 400px; height: 400px; top: 40%; left: 50%; transform: translate(-50%, -50%); animation-delay: 10s; }
+
+        @keyframes luxuryFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+            20% { opacity: 0.5; }
+            50% { transform: translate(40px, 40px) scale(1.1); opacity: 0.7; }
+            80% { opacity: 0.4; }
         }
 
-        /* --- Navigation --- */
+        /* --- Nav & Lang --- */
         nav { position: fixed; top: 30px; left: 30px; z-index: 1000; }
         .menu-btn {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
-            padding: 12px 28px;
-            border-radius: 100px;
-            cursor: pointer;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-main);
+            padding: 12px 28px; border-radius: 100px; cursor: pointer; font-weight: 600; transition: var(--transition);
         }
         .menu-btn:hover { background: var(--accent); color: #000; }
 
         .lang-switch {
-            position: fixed; top: 35px; right: 30px; z-index: 1000;
-            color: var(--accent); font-weight: 800; cursor: pointer;
-            font-size: 13px; border: 1px solid var(--accent);
-            padding: 5px 15px; border-radius: 50px;
+            position: fixed; top: 35px; right: 30px; z-index: 1000; color: var(--accent);
+            font-weight: 800; cursor: pointer; border: 1px solid var(--accent);
+            padding: 5px 15px; border-radius: 50px; background: rgba(8,8,8,0.5);
         }
 
-        /* --- Side Menu --- */
-        .side-menu {
-            position: fixed; top: 0; left: -320px; width: 300px; height: 100%;
-            background: #0F0F0F; z-index: 1001; padding: 100px 40px;
-            transition: var(--transition); border-right: 1px solid rgba(255,255,255,0.05);
-        }
-        .side-menu.active { left: 0; }
-        .side-menu a {
-            display: block; color: var(--text-dim); text-decoration: none;
-            font-size: 22px; font-weight: 700; margin-bottom: 25px; transition: 0.3s;
-        }
-        .side-menu a:hover { color: var(--accent); transform: translateX(10px); }
+        /* --- Hero --- */
+        .hero { height: 75vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .brand-icon { width: 130px; margin-bottom: 20px; filter: drop-shadow(0 0 30px rgba(252, 211, 126, 0.15)); }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 10vw, 6rem); font-weight: 700; letter-spacing: -2px; }
+        .hero p { color: var(--accent); font-weight: 700; letter-spacing: 10px; text-transform: uppercase; font-size: 14px; }
 
-        /* --- Hero Section --- */
-        .hero {
-            height: 85vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-        }
-        .brand-icon {
-            width: 140px; margin-bottom: 20px;
-            filter: drop-shadow(0 0 40px rgba(252, 211, 126, 0.15));
-        }
-        .hero h1 {
-            font-family: 'Playfair Display', serif; font-size: clamp(3rem, 10vw, 6rem);
-            font-weight: 700; margin-bottom: 5px;
-        }
-        .hero p {
-            color: var(--accent); font-weight: 700; letter-spacing: 10px;
-            text-transform: uppercase; font-size: 14px; opacity: 0.9;
-        }
-
-        /* --- Content Sections --- */
         section { max-width: 1100px; margin: 0 auto 100px; padding: 0 25px; display: none; }
-        section.active { display: block; animation: fadeInUp 1.2s ease; }
+        section.active { display: block; animation: fadeInUp 1s ease forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Social Bento Grid --- */
-        .social-bento {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
-            margin-bottom: 100px;
-        }
+        /* --- Social Bento --- */
+        .social-bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 80px; }
         .social-item {
-            background: var(--bg-card); padding: 30px; border-radius: 24px;
-            text-decoration: none; color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.03); transition: var(--transition);
-            display: flex; flex-direction: column; align-items: center; gap: 15px;
+            background: var(--bg-card); padding: 30px; border-radius: 24px; text-decoration: none;
+            color: var(--text-main); border: 1px solid rgba(255,255,255,0.03); transition: var(--transition);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
         }
-        .social-item:hover { background: rgba(252, 211, 126, 0.05); border-color: var(--accent); transform: translateY(-5px); }
-        .social-item i { font-size: 28px; color: var(--accent); }
-        .social-item span { font-weight: 700; font-size: 13px; letter-spacing: 1px; }
+        .social-item:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(252, 211, 126, 0.03); }
+        .social-item i { font-size: 24px; color: var(--accent); }
+        .social-item span { font-weight: 700; font-size: 12px; letter-spacing: 1px; }
 
-        /* --- Quotes Bento --- */
-        .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 100px; }
+        /* --- PREMIUM AUTO-CAROUSEL --- */
+        .carousel-viewport { overflow: hidden; position: relative; margin-bottom: 100px; padding: 20px 0; }
+        .quote-track { display: flex; transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1); gap: 20px; }
         .quote-card {
-            background: var(--bg-card); padding: 40px; border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.03); min-height: 250px;
-            display: flex; flex-direction: column; justify-content: space-between;
+            min-width: calc(33.333% - 14px); background: linear-gradient(145deg, #161616 0%, #0d0d0d 100%);
+            padding: 45px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.03);
+            min-height: 280px; display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
-        .quote-card p { font-size: 18px; font-style: italic; color: #CCC; }
-
-        /* --- PREMIUM E-BOOK FOOTER (Replika Sample) --- */
+        .quote-card i { color: var(--accent); font-size: 20px; opacity: 0.4; }
+        .quote-card p { font-size: 17px; font-weight: 300; color: #EEE; line-height: 1.8; font-style: italic; }
+        
+        /* --- PREMIUM E-BOOK FOOTER --- */
         .bento-ebook {
-            background: var(--bg-card); border-radius: 40px;
-            display: grid; grid-template-columns: 1.2fr 0.8fr;
+            background: var(--bg-card); border-radius: 40px; display: grid; grid-template-columns: 1.2fr 0.8fr;
             overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
-            margin-top: 50px;
         }
         .ebook-content { padding: 70px; }
         .ebook-content h2 { font-size: 45px; font-weight: 800; margin-bottom: 20px; letter-spacing: -1.5px; }
         .ebook-content p { color: var(--text-dim); font-size: 16px; margin-bottom: 40px; line-height: 1.8; }
-        
         .btn-premium {
-            background: var(--accent); color: #000; padding: 20px 40px;
-            border-radius: 14px; text-decoration: none; font-weight: 800;
-            display: inline-flex; align-items: center; gap: 15px;
+            background: var(--accent); color: #000; padding: 18px 38px; border-radius: 12px;
+            text-decoration: none; font-weight: 800; display: inline-flex; align-items: center; gap: 15px;
             transition: var(--transition);
         }
-        .btn-premium:hover { transform: scale(1.03); box-shadow: 0 10px 40px rgba(252, 211, 126, 0.3); }
+        .btn-premium:hover { transform: scale(1.05); }
 
-        .ebook-visual {
-            background: #111; display: flex; align-items: center; justify-content: center;
-            position: relative; overflow: hidden;
-        }
+        .ebook-visual { background: #0c0c0c; display: flex; align-items: center; justify-content: center; }
         .book-mockup {
-            width: 220px; height: 310px; background: #0A0A0A;
-            border-radius: 4px 12px 12px 4px; border: 1px solid rgba(255,255,255,0.1);
-            transform: rotate(-8deg) skew(2deg); box-shadow: 30px 30px 60px rgba(0,0,0,0.7);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: var(--transition);
+            width: 210px; height: 300px; background: #050505; border-radius: 4px 12px 12px 4px;
+            border: 1px solid rgba(255,255,255,0.1); transform: rotate(-8deg);
+            box-shadow: 30px 30px 60px rgba(0,0,0,0.7); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 20px;
         }
-        .book-mockup:hover { transform: rotate(0deg) scale(1.05); }
 
         /* --- About Section --- */
-        .about-box { background: var(--bg-card); padding: 60px; border-radius: 40px; color: var(--text-dim); }
-        .about-box h2 { color: #FFF; margin-bottom: 30px; font-size: 32px; }
+        .about-box { background: var(--bg-card); padding: 60px; border-radius: 40px; color: #DDD; }
+        .about-box h2 { color: #FFF; margin-bottom: 40px; font-size: 40px; text-align: center; }
 
-        /* --- Responsive --- */
+        /* --- Side Menu --- */
+        .side-menu {
+            position: fixed; top: 0; left: -320px; width: 300px; height: 100%;
+            background: #0F0F0F; z-index: 1001; padding: 100px 40px; transition: var(--transition);
+        }
+        .side-menu.active { left: 0; }
+        .side-menu a { display: block; color: var(--text-dim); text-decoration: none; font-size: 22px; font-weight: 700; margin-bottom: 25px; }
+        .side-menu a:hover { color: var(--accent); }
+
         @media (max-width: 900px) {
             .bento-ebook { grid-template-columns: 1fr; }
             .social-bento { grid-template-columns: repeat(2, 1fr); }
-            .quote-grid { grid-template-columns: 1fr; }
+            .quote-card { min-width: 100%; }
             .ebook-content { padding: 40px; text-align: center; }
-            .ebook-visual { min-height: 350px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="bgAnim"></div>
+    <div id="bgAnim">
+        <div class="premium-glow glow-1"></div>
+        <div class="premium-glow glow-2"></div>
+        <div class="premium-glow glow-3"></div>
+    </div>
 
     <div class="lang-switch" onclick="toggleLang()" id="langBtn">IND</div>
 
@@ -187,60 +160,34 @@
 
     <main id="page-beranda">
         <header class="hero">
-            <img src="Self up icon II.png" class="brand-icon" alt="Self Up Icon" onerror="this.src='https://via.placeholder.com/150/FCD37E/000000?text=UP'">
+            <img src="Self up icon II.png" class="brand-icon" alt="Self Up" onerror="this.src='https://via.placeholder.com/150/FCD37E/000000?text=UP'">
             <h1 class="playfair">Self Up</h1>
             <p id="heroTag">Growth</p>
         </header>
 
         <section id="beranda-content" class="active">
-            
             <div class="social-bento">
-                <a href="https://lynk.id/self.up" target="_blank" class="social-item">
-                    <i class="fas fa-book"></i>
-                    <span>STORE</span>
-                </a>
-                <a href="https://www.tiktok.com/@self.up_id" target="_blank" class="social-item">
-                    <i class="fab fa-tiktok"></i>
-                    <span>TIKTOK</span>
-                </a>
-                <a href="https://www.youtube.com/@self.up_id" target="_blank" class="social-item">
-                    <i class="fab fa-youtube"></i>
-                    <span>YOUTUBE</span>
-                </a>
-                <a href="https://www.instagram.com/self.up_id/" target="_blank" class="social-item">
-                    <i class="fab fa-instagram"></i>
-                    <span>INSTAGRAM</span>
-                </a>
+                <a href="https://lynk.id/self.up" target="_blank" class="social-item"><i class="fas fa-book"></i><span>STORE</span></a>
+                <a href="https://www.tiktok.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-tiktok"></i><span>TIKTOK</span></a>
+                <a href="https://www.youtube.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-youtube"></i><span>YOUTUBE</span></a>
+                <a href="https://www.instagram.com/self.up_id/" target="_blank" class="social-item"><i class="fab fa-instagram"></i><span>INSTAGRAM</span></a>
             </div>
 
-            <div class="quote-grid" id="quoteGrid"></div>
+            <div class="carousel-viewport">
+                <div class="quote-track" id="quoteTrack"></div>
+            </div>
 
             <div class="bento-ebook">
                 <div class="ebook-content">
                     <h2 id="ebookTitle">Deepen Your Journey</h2>
-                    <p id="ebookDesc">Download our comprehensive guide to mastering personal authority and professional presence. The definitive blueprint for the modern self.</p>
-                    <a href="https://lynk.id/self.up" target="_blank" class="btn-premium">
-                        <span id="ebookBtn">Get the E-Book</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                    <div style="margin-top: 35px; display: flex; align-items: center; gap: 12px;">
-                        <div style="display: flex;">
-                            <div style="width:32px; height:32px; border-radius:50%; background:#222; border:2px solid #141414"></div>
-                            <div style="width:32px; height:32px; border-radius:50%; background:#333; border:2px solid #141414; margin-left:-12px"></div>
-                            <div style="width:32px; height:32px; border-radius:50%; background:#444; border:2px solid #141414; margin-left:-12px"></div>
-                        </div>
-                        <span style="font-size: 13px; color: var(--text-dim); font-weight: 600;" id="readerCount">Joined by 2k+ readers</span>
-                    </div>
+                    <p id="ebookDesc">Download panduan komprehensif kami untuk menguasai otoritas diri dan kehadiran profesional.</p>
+                    <a href="https://lynk.id/self.up" target="_blank" class="btn-premium"><span id="ebookBtn">Get the E-Book</span><i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="ebook-visual">
                     <div class="book-mockup">
-                        <div style="background: var(--accent); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
-                            <i class="fas fa-chevron-up" style="color: #000; font-size: 18px;"></i>
-                        </div>
-                        <div style="font-size: 10px; color: var(--accent); font-weight: 800; letter-spacing: 3px;">SELF UP</div>
-                        <div class="playfair" style="font-size: 20px; text-align: center; margin-top: 5px;">The Mastery Manual</div>
-                        <div style="width: 30px; height: 1px; background: rgba(255,255,255,0.2); margin: 20px 0;"></div>
-                        <div style="font-size: 8px; color: var(--text-dim);">AUTHORITY & CLARITY</div>
+                        <div style="background: var(--accent); padding: 10px; border-radius: 8px; margin-bottom: 10px;"><i class="fas fa-chevron-up" style="color: #000;"></i></div>
+                        <div style="font-size: 10px; color: var(--accent); font-weight: 800; letter-spacing: 2px;">SELF UP</div>
+                        <div class="playfair" style="font-size: 18px; text-align: center;">The Mastery Manual</div>
                     </div>
                 </div>
             </div>
@@ -250,42 +197,46 @@
     <main id="page-about" style="display: none;">
         <section class="active">
             <div class="about-box">
-                <h2 class="playfair">Our Story</h2>
-                <div id="aboutText" style="line-height: 2;"></div>
+                <h2 class="playfair">About Self Up</h2>
+                <div class="about-content" id="aboutText">
+                    <p>Self Up adalah ruang singkat untuk berhenti, ngelihat langkah, dan mulai lagi dengan lebih tenang. Kami bikin konten yang ngajak kamu refleksi, tidak untuk menjudge, tapi untuk ngerti proses. Lewat cerita pendek, monolog, dan si maskot Self Up, kita paham bahwa tiap langkah punya arti. Pelan juga tetap maju.</p>
+                    <p>Kami membuat konten yang mengajak kamu untuk refleksi. Bukan untuk menghakimi diri sendiri, bukan juga untuk membandingkan hidup dengan orang lain, tetapi untuk memahami proses yang sedang kamu jalani. Kadang yang kita butuhkan bukan jawaban yang rumit, melainkan sudut pandang baru yang lebih jernih.</p>
+                    <p>Lewat cerita pendek, monolog reflektif, dan karakter maskot Self Up yang merepresentasikan suara kecil di dalam diri kita, setiap konten dirancang untuk membantu kamu melihat kehidupan dengan cara yang lebih tenang dan lebih sadar. Hal-hal yang sering kita rasakan. Overthinking, rasa tertinggal, kelelahan, atau keraguan tentang masa depan. Semua itu adalah bagian dari perjalanan manusia.</p>
+                    <p>Self Up percaya bahwa pertumbuhan tidak selalu terlihat besar. Kadang growth terjadi dalam langkah yang kecil. Dalam keputusan untuk mencoba lagi. Dalam keberanian untuk menerima diri sendiri. Atau dalam momen ketika kita akhirnya memahami sesuatu tentang hidup.</p>
+                    <p>Di sini, kamu tidak dituntut untuk selalu kuat atau selalu benar. Self Up hanya ingin menjadi ruang kecil yang mengingatkan bahwa setiap orang punya ritmenya sendiri. Setiap proses punya waktunya sendiri.</p>
+                    <p>Karena pada akhirnya, setiap langkah yang kamu ambil tetap memiliki arti. Pelan juga tetap maju. <br><strong>Growth.</strong></p>
+                </div>
             </div>
         </section>
     </main>
 
     <script>
+        const quotesData = {
+            IND: [
+                "Pelan juga tetap maju.", "Evolusi diri tak butuh penonton.", "Istirahat adalah investasi jiwa.",
+                "Bandingkan dirimu dengan hari kemarin.", "Menerima adalah awal kekuatan.", "Suaramu berharga, meski lirih.",
+                "Setiap musim punya maknanya.", "Jeda bukan berarti tanda berhenti.", "Keberanian dimulai dari kejujuran."
+            ],
+            ENG: [
+                "Slow is still forward.", "Your evolution needs no audience.", "Rest is a soul investment.",
+                "Compare yourself only to yesterday.", "Acceptance is where power begins.", "Your voice matters, even if soft.",
+                "Every season has its purpose.", "A pause is not a stop sign.", "Bravery starts with honesty."
+            ]
+        };
+
         const ui = {
-            IND: {
-                tag: "Growth",
-                ebookT: "Deepen Your Journey",
-                ebookD: "Unduh panduan komprehensif kami untuk menguasai otoritas diri dan kehadiran profesional. Blueprint definitif untuk pertumbuhanmu.",
-                ebookB: "Dapatkan E-Book",
-                readers: "Bergabung dengan 2rb+ pembaca",
-                about: "Self Up adalah ruang singkat untuk berhenti, melihat langkah, dan mulai lagi dengan lebih tenang. Kami membuat konten yang mengajak kamu refleksi, tidak untuk menghakimi, tapi untuk mengerti proses. Karena setiap langkah memiliki arti.",
-                quotes: ["Pelan juga tetap maju.", "Evolusi, bukan kompetisi.", "Istirahat adalah bagian dari proses."]
-            },
-            ENG: {
-                tag: "Evolution",
-                ebookT: "Deepen Your Journey",
-                ebookD: "Download our comprehensive guide to mastering personal authority and professional presence. The definitive blueprint for the modern self.",
-                ebookB: "Get the E-Book",
-                readers: "Joined by 2k+ readers",
-                about: "Self Up is a brief space to stop, observe your steps, and start again with more calm. We create content that invites reflection—not to judge, but to understand the process. Every step matters.",
-                quotes: ["Slowly but surely.", "Evolution, not competition.", "Rest is part of the process."]
-            }
+            IND: { tag: "Growth", ebookT: "Deepen Your Journey", ebookD: "Unduh panduan komprehensif kami untuk menguasai otoritas diri.", ebookB: "Dapatkan E-Book" },
+            ENG: { tag: "Evolution", ebookT: "Deepen Your Journey", ebookD: "Download our comprehensive guide to mastering personal authority.", ebookB: "Get the E-Book" }
         };
 
         let lang = 'IND';
+        let currentGroup = 0;
 
         function toggleMenu() { document.getElementById('sideMenu').classList.toggle('active'); }
-
         function showPage(page) {
             document.getElementById('page-beranda').style.display = (page === 'beranda') ? 'block' : 'none';
             document.getElementById('page-about').style.display = (page === 'about') ? 'block' : 'none';
-            toggleMenu();
+            if(document.getElementById('sideMenu').classList.contains('active')) toggleMenu();
             window.scrollTo(0,0);
         }
 
@@ -301,21 +252,39 @@
             document.getElementById('ebookTitle').innerText = d.ebookT;
             document.getElementById('ebookDesc').innerText = d.ebookD;
             document.getElementById('ebookBtn').innerText = d.ebookB;
-            document.getElementById('readerCount').innerText = d.readers;
-            document.getElementById('aboutText').innerText = d.about;
+            renderQuotes();
+        }
 
-            const grid = document.getElementById('quoteGrid');
-            grid.innerHTML = '';
-            d.quotes.forEach(q => {
-                grid.innerHTML += `
+        function renderQuotes() {
+            const track = document.getElementById('quoteTrack');
+            track.innerHTML = '';
+            const qs = quotesData[lang];
+            qs.forEach(q => {
+                track.innerHTML += `
                     <div class="quote-card">
-                        <i class="fas fa-quote-left" style="color:var(--accent); font-size:24px;"></i>
+                        <i class="fas fa-quote-left"></i>
                         <p>${q}</p>
-                        <span style="font-size:10px; color:var(--accent); font-weight:800;">#SELFUP</span>
+                        <span style="font-size:10px; color:var(--accent); font-weight:800; letter-spacing:1px;">#SELFUP</span>
                     </div>
                 `;
             });
+            currentGroup = 0;
+            track.style.transform = `translateX(0)`;
         }
+
+        // Auto slide logic (3 groups of 3)
+        setInterval(() => {
+            currentGroup = (currentGroup + 1) % 3;
+            const track = document.getElementById('quoteTrack');
+            const offset = currentGroup * 100;
+            if(window.innerWidth > 900) {
+                track.style.transform = `translateX(calc(-${offset}% - ${currentGroup * 20}px))`;
+            } else {
+                // Mobile slide (one by one)
+                let mobileIdx = (currentGroup * 3) % 9;
+                track.style.transform = `translateX(calc(-${currentGroup * 100}%))`;
+            }
+        }, 3000);
 
         window.onload = updateUI;
     </script>
