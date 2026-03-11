@@ -15,6 +15,7 @@
             --bg-card: #0D0D0D;      
             --accent: #FCD37E;       
             --accent-gradient: linear-gradient(135deg, #FCD37E 0%, #D4AF37 50%, #B8860B 100%);
+            --silver-gradient: linear-gradient(135deg, #c0c0c0 0%, #ffffff 50%, #a0a0a0 100%);
             --text-main: #FFFFFF;
             --text-dim: #777777;     
             --transition-premium: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
@@ -44,7 +45,71 @@
             100% { transform: translate(80px, 40px); }
         }
 
-        /* --- MINIMALIST LANG SWITCH --- */
+        /* --- LUXURY LOGO ANIMATION --- */
+        .logo-wrapper {
+            position: relative;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+            margin-bottom: 10px;
+        }
+
+        .logo-text-anim {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 10vw, 6.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            position: relative;
+            display: flex;
+            gap: 15px;
+            opacity: 0;
+            letter-spacing: -2px;
+        }
+
+        .letter-anim {
+            display: inline-block;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .self-text {
+            color: transparent;
+            background: var(--silver-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .up-text {
+            color: transparent;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .light-sweep-anim {
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            z-index: 5; filter: blur(12px); opacity: 0;
+        }
+
+        @keyframes revealLogo {
+            0% { opacity: 0; transform: translateZ(-200px) rotateX(-30deg); }
+            100% { opacity: 1; transform: translateZ(0) rotateX(0); }
+        }
+
+        @keyframes sweepEffect {
+            0% { left: -100%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        .animate-now { animation: revealLogo 2.5s cubic-bezier(0.215, 0.610, 0.355, 1) forwards; }
+        .sweep-now { animation: sweepEffect 1.8s ease-in-out forwards; }
+
+        /* --- NAVIGATION --- */
         .lang-switch {
             position: fixed; top: 40px; right: 40px; z-index: 1002; color: var(--accent);
             font-weight: 800; cursor: pointer; font-size: 11px; letter-spacing: 2px;
@@ -52,7 +117,6 @@
             border: 1px solid rgba(252, 211, 126, 0.2); backdrop-filter: blur(10px);
         }
 
-        /* --- DROPDOWN NAVIGATION (SCROLL DOWN EFFECT) --- */
         nav { position: fixed; top: 40px; left: 40px; z-index: 1002; }
         .menu-btn {
             background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px);
@@ -77,13 +141,6 @@
 
         /* --- HERO --- */
         .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .brand-icon { width: 140px; margin-bottom: 30px; filter: drop-shadow(0 0 20px rgba(252, 211, 126, 0.2)); }
-        .hero h1 { 
-            font-family: 'Playfair Display', serif; font-size: clamp(4rem, 12vw, 8rem); 
-            font-weight: 900; letter-spacing: -4px; line-height: 0.9;
-            background: linear-gradient(to bottom, #FFF 50%, #777 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
         .hero p { color: var(--accent); font-weight: 300; letter-spacing: 12px; text-transform: uppercase; font-size: 11px; margin-top: 15px; }
 
         /* --- BENTO SOCIAL --- */
@@ -107,7 +164,7 @@
         .quote-card p { font-size: 17px; font-weight: 300; line-height: 1.8; color: #BBB; }
         .quote-card .tag { font-size: 10px; color: var(--accent); letter-spacing: 2px; font-weight: 800; text-transform: lowercase; }
 
-        /* --- PREMIUM FOOTER E-BOOK --- */
+        /* --- E-BOOK SECTION --- */
         .bento-ebook {
             background: #0D0D0D; border-radius: 50px; display: grid; grid-template-columns: 1.2fr 0.8fr;
             overflow: hidden; border: 1px solid rgba(255,255,255,0.03); max-width: 1100px; margin: 0 auto 100px;
@@ -138,6 +195,8 @@
             .quote-card { min-width: 100%; }
             .bento-ebook { grid-template-columns: 1fr; }
             .dropdown-nav { flex-direction: column; text-align: center; gap: 20px; }
+            .logo-text-anim { font-size: 3.5rem; }
+            .logo-wrapper { height: 120px; }
         }
     </style>
 </head>
@@ -163,8 +222,13 @@
 
     <main id="page-beranda">
         <header class="hero">
-            <img src="Self up icon II.png" class="brand-icon" alt="Self Up" onerror="this.src='https://via.placeholder.com/150/FCD37E/000000?text=UP'">
-            <h1 class="playfair">Self Up</h1>
+            <div class="logo-wrapper">
+                <div class="logo-text-anim" id="mainLogo">
+                    <span class="letter-anim self-text">Self</span>
+                    <span class="letter-anim up-text">Up</span>
+                    <div class="light-sweep-anim" id="logoSweep"></div>
+                </div>
+            </div>
             <p id="heroTag">Growth and healing</p>
         </header>
 
@@ -211,6 +275,23 @@
     </main>
 
     <script>
+        // --- LOGO ANIMATION LOGIC ---
+        function triggerLogoAnimation() {
+            const logo = document.getElementById('mainLogo');
+            const sweep = document.getElementById('logoSweep');
+            if(!logo || !sweep) return;
+
+            logo.classList.remove('animate-now');
+            sweep.classList.remove('sweep-now');
+            void logo.offsetWidth; // Trigger reflow
+
+            logo.classList.add('animate-now');
+            setTimeout(() => {
+                sweep.classList.add('sweep-now');
+            }, 700);
+        }
+
+        // --- QUOTES DATA ---
         const quotesData = {
             ID: [
                 "Pelan juga tetap maju.", "Evolusi diri tak butuh penonton.", "Istirahat adalah investasi jiwa.",
@@ -236,6 +317,7 @@
             document.getElementById('page-about').style.display = (page === 'about') ? 'block' : 'none';
             document.getElementById('dropdownNav').classList.remove('active');
             window.scrollTo({top: 0, behavior: 'smooth'});
+            if(page === 'beranda') triggerLogoAnimation();
         }
 
         function toggleLang() {
@@ -250,6 +332,7 @@
 
         function renderQuotes() {
             const track = document.getElementById('quoteTrack');
+            if(!track) return;
             track.innerHTML = '';
             quotesData[lang].forEach(q => {
                 track.innerHTML += `
@@ -262,14 +345,23 @@
             });
         }
 
+        // Carousel Logic
         setInterval(() => {
-            currentGroup = (currentGroup + 1) % 3;
             const track = document.getElementById('quoteTrack');
-            const cardWidth = document.querySelector('.quote-card').offsetWidth + 25;
-            track.style.transform = `translateX(-${currentGroup * cardWidth * (window.innerWidth > 900 ? 3 : 1)}px)`;
-        }, 3000);
+            const firstCard = document.querySelector('.quote-card');
+            if (track && firstCard && document.getElementById('page-beranda').style.display !== 'none') {
+                currentGroup = (currentGroup + 1) % 3;
+                const cardWidth = firstCard.offsetWidth + 25;
+                track.style.transform = `translateX(-${currentGroup * cardWidth * (window.innerWidth > 900 ? 3 : 1)}px)`;
+            }
+        }, 4000);
 
-        window.onload = updateUI;
+        // Init Everything
+        window.onload = () => {
+            updateUI();
+            triggerLogoAnimation();
+            setInterval(triggerLogoAnimation, 10000); // Loop Logo every 10s
+        };
     </script>
 </body>
 </html>
