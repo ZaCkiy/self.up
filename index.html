@@ -14,8 +14,8 @@
             --bg-deep: #050505;
             --bg-card: #0D0D0D;      
             --accent: #FCD37E;       
-            --accent-gradient: linear-gradient(135deg, #FCD37E 0%, #D4AF37 50%, #B8860B 100%);
-            --silver-gradient: linear-gradient(135deg, #c0c0c0 0%, #ffffff 50%, #a0a0a0 100%);
+            --accent-gradient: linear-gradient(135deg, #ffd700 0%, #ffec8b 45%, #fffacd 70%, #daa520 100%);
+            --silver-gradient: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 45%, #ffffff 70%, #a0a0a0 100%);
             --text-main: #FFFFFF;
             --text-dim: #777777;     
             --transition-premium: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
@@ -45,34 +45,32 @@
             100% { transform: translate(80px, 40px); }
         }
 
-        /* --- LUXURY LOGO ANIMATION --- */
+        /* --- CINEMATIC LOGO ANIMATION SECTION --- */
         .logo-wrapper {
             position: relative;
-            height: 180px;
+            height: 250px;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
             perspective: 1200px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .logo-text-anim {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(4rem, 10vw, 6.5rem);
-            font-weight: 900;
+            font-size: clamp(4rem, 12vw, 7rem);
+            font-weight: 800;
             text-transform: uppercase;
             position: relative;
             display: flex;
-            gap: 15px;
+            gap: 10px;
             opacity: 0;
-            letter-spacing: -2px;
-        }
-
-        .letter-anim {
-            display: inline-block;
-            position: relative;
+            letter-spacing: 2px;
             transform-style: preserve-3d;
         }
+
+        .letter-anim { display: inline-block; position: relative; }
 
         .self-text {
             color: transparent;
@@ -88,13 +86,27 @@
             background-clip: text;
         }
 
+        /* Garis Putih Horizontal (Shining Wave) */
+        .shining-wave {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            z-index: 4;
+            opacity: 0;
+            filter: blur(2px);
+        }
+
+        /* Efek Kilatan (Light Sweep) */
         .light-sweep-anim {
             position: absolute;
             top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            z-index: 5; filter: blur(12px); opacity: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%);
+            z-index: 5; filter: blur(10px); opacity: 0;
         }
 
+        /* KEYFRAMES */
         @keyframes revealLogo {
             0% { opacity: 0; transform: translateZ(-200px) rotateX(-30deg); }
             100% { opacity: 1; transform: translateZ(0) rotateX(0); }
@@ -102,14 +114,21 @@
 
         @keyframes sweepEffect {
             0% { left: -100%; opacity: 0; }
-            50% { opacity: 1; }
+            10% { opacity: 0.8; }
             100% { left: 100%; opacity: 0; }
         }
 
-        .animate-now { animation: revealLogo 2.5s cubic-bezier(0.215, 0.610, 0.355, 1) forwards; }
-        .sweep-now { animation: sweepEffect 1.8s ease-in-out forwards; }
+        @keyframes shineWave {
+            0% { top: 20%; opacity: 0; }
+            10% { opacity: 0.6; }
+            100% { top: 80%; opacity: 0; }
+        }
 
-        /* --- NAVIGATION --- */
+        .animate-reveal { animation: revealLogo 2.5s cubic-bezier(0.215, 0.610, 0.355, 1) forwards; }
+        .animate-sweep { animation: sweepEffect 1.8s cubic-bezier(0.45, 0.03, 0.51, 0.95) forwards; }
+        .animate-wave { animation: shineWave 2s ease-in-out forwards; }
+
+        /* --- UI ELEMENTS --- */
         .lang-switch {
             position: fixed; top: 40px; right: 40px; z-index: 1002; color: var(--accent);
             font-weight: 800; cursor: pointer; font-size: 11px; letter-spacing: 2px;
@@ -133,70 +152,30 @@
             padding: 120px 40px 40px; display: flex; justify-content: center; gap: 50px;
         }
         .dropdown-nav.active { top: 0; visibility: visible; }
-        .dropdown-nav a {
-            text-decoration: none; color: #888; font-size: 14px; font-weight: 600;
-            letter-spacing: 3px; text-transform: uppercase; transition: 0.3s;
-        }
-        .dropdown-nav a:hover { color: var(--accent); transform: translateY(-3px); }
+        .dropdown-nav a { text-decoration: none; color: #888; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; transition: 0.3s; }
+        .dropdown-nav a:hover { color: var(--accent); }
 
-        /* --- HERO --- */
-        .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .hero p { color: var(--accent); font-weight: 300; letter-spacing: 12px; text-transform: uppercase; font-size: 11px; margin-top: 15px; }
+        .hero { height: 95vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .hero p { color: var(--accent); font-weight: 300; letter-spacing: 12px; text-transform: uppercase; font-size: 11px; margin-top: 5px; opacity: 0.7; }
 
-        /* --- BENTO SOCIAL --- */
+        /* BENTO & OTHERS */
         .social-bento { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 1100px; margin: 0 auto 100px; padding: 0 25px; }
         .social-item {
             background: rgba(13, 13, 13, 0.6); padding: 40px 20px; border-radius: 30px;
             text-decoration: none; color: #FFF; border: 1px solid rgba(255,255,255,0.03);
             transition: var(--transition-premium); display: flex; flex-direction: column; align-items: center; gap: 15px;
         }
-        .social-item:hover { border-color: var(--accent); background: #111; transform: translateY(-8px); }
+        .social-item:hover { border-color: var(--accent); transform: translateY(-8px); }
         .social-item i { font-size: 22px; color: var(--accent); }
         .social-item span { font-weight: 600; font-size: 10px; letter-spacing: 2px; color: var(--text-dim); }
 
-        /* --- QUOTE SLIDER --- */
-        .carousel-viewport { overflow: hidden; margin-bottom: 100px; padding: 20px 0; }
-        .quote-track { display: flex; transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1); gap: 25px; padding: 0 50px; }
-        .quote-card {
-            min-width: calc(33.333% - 17px); background: #0D0D0D; padding: 45px; border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.02); min-height: 280px; display: flex; flex-direction: column; justify-content: space-between;
-        }
-        .quote-card p { font-size: 17px; font-weight: 300; line-height: 1.8; color: #BBB; }
-        .quote-card .tag { font-size: 10px; color: var(--accent); letter-spacing: 2px; font-weight: 800; text-transform: lowercase; }
-
-        /* --- E-BOOK SECTION --- */
-        .bento-ebook {
-            background: #0D0D0D; border-radius: 50px; display: grid; grid-template-columns: 1.2fr 0.8fr;
-            overflow: hidden; border: 1px solid rgba(255,255,255,0.03); max-width: 1100px; margin: 0 auto 100px;
-        }
-        .ebook-content { padding: 80px; }
-        .ebook-content h2 { font-size: 48px; font-weight: 800; letter-spacing: -2px; line-height: 1.1; margin-bottom: 25px; }
-        .btn-premium {
-            background: var(--accent-gradient); color: #000; padding: 20px 45px; border-radius: 100px;
-            text-decoration: none; font-weight: 800; display: inline-flex; align-items: center; gap: 15px;
-            transition: var(--transition-premium); font-size: 13px; text-transform: uppercase;
-        }
-        .btn-premium:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2); }
-
-        .ebook-visual { background: #0c0c0c; display: flex; align-items: center; justify-content: center; position: relative; }
-        .book-mockup {
-            width: 200px; height: 280px; background: #000; border-radius: 4px 15px 15px 4px;
-            border: 1px solid rgba(255,255,255,0.1); transform: rotate(-8deg);
-            box-shadow: 40px 40px 80px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
-        }
-
-        /* --- ABOUT --- */
         .about-box { background: #0D0D0D; padding: 80px 60px; border-radius: 50px; max-width: 1100px; margin: 100px auto; border: 1px solid rgba(255,255,255,0.02); }
         .about-box h2 { font-family: 'Playfair Display', serif; font-size: 45px; text-align: center; margin-bottom: 50px; color: #FFF; }
-        .about-content p { color: #888; margin-bottom: 25px; font-size: 16px; line-height: 2; text-align: justify; }
 
-        @media (max-width: 900px) {
+        @media (max-width: 768px) {
             .social-bento { grid-template-columns: repeat(2, 1fr); }
-            .quote-card { min-width: 100%; }
-            .bento-ebook { grid-template-columns: 1fr; }
-            .dropdown-nav { flex-direction: column; text-align: center; gap: 20px; }
             .logo-text-anim { font-size: 3.5rem; }
-            .logo-wrapper { height: 120px; }
+            .logo-wrapper { height: 180px; }
         }
     </style>
 </head>
@@ -223,6 +202,9 @@
     <main id="page-beranda">
         <header class="hero">
             <div class="logo-wrapper">
+                <div class="shining-wave" id="wave1"></div>
+                <div class="shining-wave" id="wave2" style="animation-delay: 0.5s;"></div>
+                
                 <div class="logo-text-anim" id="mainLogo">
                     <span class="letter-anim self-text">Self</span>
                     <span class="letter-anim up-text">Up</span>
@@ -232,135 +214,65 @@
             <p id="heroTag">Growth and healing</p>
         </header>
 
-        <section id="beranda-content" style="display: block;">
-            <div class="social-bento">
-                <a href="https://lynk.id/self.up" target="_blank" class="social-item"><i class="fas fa-crown"></i><span>E-BOOK</span></a>
-                <a href="https://www.tiktok.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-tiktok"></i><span>TIKTOK</span></a>
-                <a href="https://www.youtube.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-youtube"></i><span>YOUTUBE</span></a>
-                <a href="https://www.instagram.com/self.up_id/" target="_blank" class="social-item"><i class="fab fa-instagram"></i><span>INSTAGRAM</span></a>
-            </div>
-
-            <div class="carousel-viewport">
-                <div class="quote-track" id="quoteTrack"></div>
-            </div>
-
-            <div class="bento-ebook">
-                <div class="ebook-content">
-                    <h2 id="ebookTitle">Master Your <br>Inner Authority</h2>
-                    <a href="https://lynk.id/self.up" target="_blank" class="btn-premium"><span id="ebookBtn">Acquire Access</span><i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="ebook-visual">
-                    <div class="book-mockup">
-                        <div style="background: var(--accent); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;"><i class="fas fa-chevron-up" style="color: #000;"></i></div>
-                        <div style="font-size: 10px; color: var(--accent); font-weight: 800; letter-spacing: 4px;">SELF UP</div>
-                        <div class="playfair" style="font-size: 18px; text-align: center; margin-top: 10px;">The Mastery Manual</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div class="social-bento">
+            <a href="https://lynk.id/self.up" target="_blank" class="social-item"><i class="fas fa-crown"></i><span>E-BOOK</span></a>
+            <a href="https://www.tiktok.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-tiktok"></i><span>TIKTOK</span></a>
+            <a href="https://www.youtube.com/@self.up_id" target="_blank" class="social-item"><i class="fab fa-youtube"></i><span>YOUTUBE</span></a>
+            <a href="https://www.instagram.com/self.up_id/" target="_blank" class="social-item"><i class="fab fa-instagram"></i><span>INSTAGRAM</span></a>
+        </div>
     </main>
 
     <main id="page-about" style="display: none;">
         <div class="about-box">
-            <h2 class="playfair">Philosophy</h2>
-            <div class="about-content">
-                <p>Self Up adalah ruang singkat untuk berhenti, ngelihat langkah, dan mulai lagi dengan lebih tenang. Kami bikin konten yang ngajak kamu refleksi, tidak untuk menjudge, tapi untuk ngerti proses. Lewat cerita pendek, monolog, dan si maskot Self Up, kita paham bahwa tiap langkah punya arti. Pelan juga tetap maju.</p>
-                <p>Kami membuat konten yang mengajak kamu untuk refleksi. Bukan untuk menghakimi diri sendiri, bukan juga untuk membandingkan hidup dengan orang lain, tetapi untuk memahami proses yang sedang kamu jalani. Kadang yang kita butuhkan bukan jawaban yang rumit, melainkan sudut pandang baru yang lebih jernih.</p>
-                <p>Lewat cerita pendek, monolog reflektif, dan karakter maskot Self Up yang merepresentasikan suara kecil di dalam diri kita, setiap konten dirancang untuk membantu kamu melihat kehidupan dengan cara yang lebih tenang dan lebih sadar.</p>
-                <p>Self Up percaya bahwa pertumbuhan tidak selalu terlihat besar. Kadang growth terjadi dalam langkah yang kecil. Dalam keputusan untuk mencoba lagi. Dalam keberanian untuk menerima diri sendiri. Atau dalam momen ketika kita akhirnya memahami sesuatu tentang hidup.</p>
-                <p>Di sini, kamu tidak dituntut untuk selalu kuat atau selalu benar. Self Up hanya ingin menjadi ruang kecil yang mengingatkan bahwa setiap orang punya ritmenya sendiri. Setiap proses punya waktunya sendiri.</p>
-                <p style="text-align: center; font-weight: 800; color: var(--accent); margin-top: 50px;">Pelan juga tetap maju. <br>Growth.</p>
+            <h2>Philosophy</h2>
+            <div style="color: #888; text-align: center; max-width: 800px; margin: 0 auto; line-height: 2;">
+                <p>Self Up adalah ruang singkat untuk berhenti, melihat langkah, dan mulai lagi dengan lebih tenang. Pelan juga tetap maju.</p>
             </div>
         </div>
     </main>
 
     <script>
-        // --- LOGO ANIMATION LOGIC ---
-        function triggerLogoAnimation() {
-            const logo = document.getElementById('mainLogo');
-            const sweep = document.getElementById('logoSweep');
-            if(!logo || !sweep) return;
+        const mainLogo = document.getElementById('mainLogo');
+        const logoSweep = document.getElementById('logoSweep');
+        const wave1 = document.getElementById('wave1');
+        const wave2 = document.getElementById('wave2');
 
-            logo.classList.remove('animate-now');
-            sweep.classList.remove('sweep-now');
-            void logo.offsetWidth; // Trigger reflow
+        function triggerPremiumAnimation() {
+            // Reset animations
+            [mainLogo, logoSweep, wave1, wave2].forEach(el => {
+                el.classList.remove('animate-reveal', 'animate-sweep', 'animate-wave');
+                void el.offsetWidth; // Trigger reflow
+            });
 
-            logo.classList.add('animate-now');
+            // Start Sequence
+            mainLogo.classList.add('animate-reveal');
+            
             setTimeout(() => {
-                sweep.classList.add('sweep-now');
-            }, 700);
+                logoSweep.classList.add('animate-sweep');
+            }, 500);
+
+            setTimeout(() => {
+                wave1.classList.add('animate-wave');
+                wave2.classList.add('animate-wave');
+            }, 1800);
         }
 
-        // --- QUOTES DATA ---
-        const quotesData = {
-            ID: [
-                "Pelan juga tetap maju.", "Evolusi diri tak butuh penonton.", "Istirahat adalah investasi jiwa.",
-                "Bandingkan dirimu dengan hari kemarin.", "Menerima adalah awal kekuatan.", "Suaramu berharga, meski lirih.",
-                "Setiap musim punya maknanya.", "Jeda bukan berarti tanda berhenti.", "Keberanian dimulai dari kejujuran."
-            ],
-            EN: [
-                "Slow is still forward.", "Your evolution needs no audience.", "Rest is a soul investment.",
-                "Compare yourself only to yesterday.", "Acceptance is where power begins.", "Your voice matters, even if soft.",
-                "Every season has its purpose.", "A pause is not a stop sign.", "Bravery starts with honesty."
-            ]
-        };
-
-        let lang = 'ID';
-        let currentGroup = 0;
-
+        // Navigation & Logic
         function toggleDropdown() {
             document.getElementById('dropdownNav').classList.toggle('active');
         }
-        
+
         function showPage(page) {
             document.getElementById('page-beranda').style.display = (page === 'beranda') ? 'block' : 'none';
             document.getElementById('page-about').style.display = (page === 'about') ? 'block' : 'none';
             document.getElementById('dropdownNav').classList.remove('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            if(page === 'beranda') triggerLogoAnimation();
+            if(page === 'beranda') triggerPremiumAnimation();
         }
 
-        function toggleLang() {
-            lang = (lang === 'ID') ? 'EN' : 'ID';
-            document.getElementById('langBtn').innerText = lang;
-            updateUI();
-        }
-
-        function updateUI() {
-            renderQuotes();
-        }
-
-        function renderQuotes() {
-            const track = document.getElementById('quoteTrack');
-            if(!track) return;
-            track.innerHTML = '';
-            quotesData[lang].forEach(q => {
-                track.innerHTML += `
-                    <div class="quote-card">
-                        <i class="fas fa-quote-left" style="color:var(--accent); opacity:0.3; margin-bottom:20px;"></i>
-                        <p>${q}</p>
-                        <div class="tag">#self_up</div>
-                    </div>
-                `;
-            });
-        }
-
-        // Carousel Logic
-        setInterval(() => {
-            const track = document.getElementById('quoteTrack');
-            const firstCard = document.querySelector('.quote-card');
-            if (track && firstCard && document.getElementById('page-beranda').style.display !== 'none') {
-                currentGroup = (currentGroup + 1) % 3;
-                const cardWidth = firstCard.offsetWidth + 25;
-                track.style.transform = `translateX(-${currentGroup * cardWidth * (window.innerWidth > 900 ? 3 : 1)}px)`;
-            }
-        }, 4000);
-
-        // Init Everything
+        // Init & Loop 15s
         window.onload = () => {
-            updateUI();
-            triggerLogoAnimation();
-            setInterval(triggerLogoAnimation, 10000); // Loop Logo every 10s
+            triggerPremiumAnimation();
+            setInterval(triggerPremiumAnimation, 15000); 
         };
     </script>
 </body>
